@@ -1,0 +1,91 @@
+{% extends "shop_app/base.html" %}
+
+{% block title %}
+    Ваша корзина
+{% endblock %}
+
+{% block body %}
+{% load static %}
+<div class="container mt-3 mb-3">
+    <div class="row">
+        <div class="col-xl-8 col-md-12 col-sm-12">
+            <p class="fw-light fs-2">Содержимое вашего заказа:</p>
+            {% if products_info %}
+                {% for product_info in products_info %}
+                    <div class="card mb-3 shadow-sm" style="max-width: 950px; background-color: #fafafa">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <img src="{{ product_info.flower_image.url }}" class="img-fluid rounded-start mx-auto img-cover" alt="product_info.flower_name">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ product_info.flower_name }}</h5>
+                                    <p class="card-text">{{ product_info.flower_description|truncatechars:115 }}</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <h5 class="card-title">{{ product_info.flower_price }} ₽</h5>
+
+                                        <form action="{% url 'shop_app:delete_from_cart' pk=product_info.flower_pk %}" method="post">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-outline-danger">Убрать из корзины</button>
+                                        </form>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+
+            <div class="col-xl-4 col-md-12 col-sm-12">
+                <div style="background-color: #fafafa; border-radius: 0.25rem; padding: 1rem;" class="rounded-5 shadow-sm">
+                    <p class="fw-light fs-2 text-center">Информация о заказе</p>
+
+                    <form id="checkoutForm" method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Адрес доставки</label>
+                            <input class="form-control" id="exampleInputEmail1" name="delivery_adress" aria-describedby="adressinput">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">Номер телефона</label>
+                            <input class="form-control" id="exampleInputPassword1" name="phone">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">Промокод</label>
+                            <input class="form-control" id="exampleInputPassword1" name="promocode">
+                            <div id="emailHelp" class="form-text">Введите промокод при наличии, либо оставьте поле пустым</div>
+                        </div>
+                        <button type="submit" class="btn btn-outline-dark">Оформить заказ</button>
+                    </form>
+
+                    <div id="errorMessage" class="text-danger"></div>
+
+                </div>
+            </div>
+        {% else %}
+            <p class="fw-light fs-1">Ваша корзина пуста ):</p>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+    document.getElementById("checkoutForm").addEventListener("submit", function(event) {
+        var deliveryAdress = document.getElementById("exampleInputEmail1").value;
+        var phone = document.getElementById("exampleInputPassword1").value;
+
+        if (deliveryAdress.trim() === "" || phone.trim() === "") {
+            event.preventDefault();
+            document.getElementById("errorMessage").innerText = "Пожалуйста, заполните все поля"; // Отображение текста ошибки
+        }
+
+        if (!/^\d+$/.test(phone)) {
+            event.preventDefault();
+            document.getElementById("errorMessage").innerText = "Номер телефона должен содержать только цифры"; // Отображение текста ошибки
+        }
+    });
+</script>
+
+
+{% endblock %}

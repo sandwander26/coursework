@@ -1,0 +1,119 @@
+{% extends "shop_app/base.html" %}
+
+{% block title %}
+    {{ flower.name }}
+{% endblock %}
+
+
+{% block body %}
+{% load static %}
+    <div class="container mb-5">
+        <div class="row">
+            <div class="col-xl-6 col-md-12 col-sm-12">
+                <img src="{{ flower.image.url }}" alt="" class="img-fluid mx-auto rounded">
+            </div>
+            <div class="col-xl-6 col-md-12 col-sm-12">
+                <p class="fw-normal fs-2">{{ flower.name }}</p>
+                <p class="fw-normal">{{ flower.description }}</p>
+                <div class="row mt-2">
+                    <div class="col">
+                        <p class="fw-medium fs-1">{{ flower.price|floatformat:0 }} ₽</p>
+                    </div>
+                    <div class="col text-end">
+                        <form action="{% url 'shop_app:add_to_cart' flower.pk %}" method="post">
+                        {% csrf_token %}
+                            <div class="input-group justify-content-end">
+                                <button type="submit" class="btn btn-outline-success btn-lg">В корзину</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col">
+                        <div class="card" style="width: 18rem; height: 6rem;">
+                          <div class="card-body bg-light">
+                            <p class="fw-normal fs-5 mb-0">Доставка</p>
+                            <p class="fw-light fs-6 mb-0">Бесплатная от 3000 ₽</p>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="border-bottom">
+                <div class="accordion accordion-flush" id="accordionFlushExample">
+                  <div class="accordion-item">
+                    <h2 class="accordion-header">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                        <b>Правила пользования</b>
+                      </button>
+                    </h2>
+                    <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                      <div class="accordion-body">Роза кустовая  - 5 шт, Роза Россия (50)  - 3 шт, Гипсофила  - 1 шт, Фисташка (писташ)  - 4 шт, Упаковка 200 (сетка, фетр)  - 1 шт, Атласная лента  - 1 шт.</div>
+                    </div>
+                  </div>
+                  <div class="accordion-item">
+                    <h2 class="accordion-header">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                        <b>Почему покупают у нас</b>
+                      </button>
+                    </h2>
+                    <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                      <div class="accordion-body">У нас лучше всех</div>
+                    </div>
+                  </div>
+                  <div class="accordion-item">
+                    <h2 class="accordion-header">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                        <b>Доставка</b>
+                      </button>
+                    </h2>
+                    <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                      <div class="accordion-body">Доставка за наш счёт</div>
+                    </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-6 col-md-12 col-sm-12">
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function decreaseQuantity() {
+            var quantityInput = document.getElementById('quantity');
+            var quantity = parseInt(quantityInput.value);
+            if (quantity > 1) {
+                quantity--;
+            }
+            quantityInput.value = quantity;
+        }
+
+        function increaseQuantity() {
+            var quantityInput = document.getElementById('quantity');
+            var quantity = parseInt(quantityInput.value);
+            quantity++;
+            quantityInput.value = quantity;
+        }
+
+        function addToCart() {
+            var quantityInput = document.getElementById('quantity');
+            var quantity = parseInt(quantityInput.value);
+
+            // Создаем объект FormData и добавляем в него значение количества
+            var formData = new FormData();
+            formData.append('quantity', quantity);
+
+            // Создаем AJAX-запрос
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/add_to_cart/', true);
+
+            // Устанавливаем заголовок X-CSRFToken для защиты от CSRF-атак
+            xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
+
+            // Отправляем запрос с данными
+            xhr.send(formData);
+        }
+    </script>
+{% endblock %}

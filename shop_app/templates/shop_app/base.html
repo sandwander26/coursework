@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="ru" >
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %} {% endblock %}</title>
+    {% load static %}
+    <link rel="shortcut icon" href="{% static '/img/flower_img.png' %}" type="image/x-icon">
+    <link href="{% static '/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static '/css/style.css' %}" rel="stylesheet">
+    <link href="{% static '/css/fontello.css' %}" rel="stylesheet">
+</head>
+<body>
+
+
+<nav class="py-2 bg-light border-bottom">
+    <div class="container d-flex flex-wrap">
+      <ul class="nav me-auto">
+        <li class="nav-item"><a href="{% url 'shop_app:shop_app' %}" class="nav-link link-dark px-2 active" aria-current="page">Главная</a></li>
+        <li class="nav-item"><a href="#" class="nav-link link-dark px-2">Каталог</a></li>
+        <li class="nav-item"><a href="#" class="nav-link link-dark px-2">Как купить</a></li>
+        <li class="nav-item"><a href="#" class="nav-link link-dark px-2">Доставка</a></li>
+        <li class="nav-item"><a href="#" class="nav-link link-dark px-2">О нас</a></li>
+      </ul>
+      <ul class="nav">
+        <li class="nav-item"><a href="#" class="nav-link link-dark px-2 active" aria-current="page">Отзывы</a></li>
+        <li class="nav-item"><a href="{% url 'shop_app:cart' %}" class="nav-link link-dark px-2 active" aria-current="page">Корзина</a></li>
+      </ul>
+    </div>
+  </nav>
+<header class="py-3 mb-4 border-bottom shadow">
+    <div class="container d-flex flex-wrap justify-content-center">
+      <a href="{% url 'shop_app:shop_app' %}" class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none">
+        <img src="{% static '/img/logo.jpg' %}" alt="Логотип" class="bi me-2 rounded" width="40" height="32">
+        <span class="fs-4">Цветочный магазин #1 в России</span>
+      </a>
+        <form method="get" action="{% url 'shop_app:search' %}">
+            <input type="search" class="form-control" name="search" placeholder="Поиск по товарам..." aria-label="Search">
+        </form>
+
+    </div>
+  </header>
+
+{% block body %}
+
+{% endblock %}
+    <div class="container">
+        <div class="row">
+            <hr class="border-bottom">
+            <div class="col-xl-3 col-md-6 col-sm-12 mb-3">
+                <p class="fw-normal fs-6 mb-4">Информация</p>
+                <p class="fw-light fs-6 mb-3 text-muted">О Букетной лавке</p>
+                <p class="fw-light fs-6 mb-3 text-muted">Новости</p>
+                <p class="fw-light fs-6 mb-3 text-muted">Вопрос-ответ</p>
+                <p class="fw-light fs-6 mb-3 text-muted">Акции</p>
+                <p class="fw-light fs-6 mb-3 text-muted">Сотрудники</p>
+                <p class="fw-light fs-6 mb-3 text-muted">Вакансии</p>
+                <p class="fw-light fs-6 mb-3 text-muted">Отзывы</p>
+                <p class="fw-light fs-6 mb-3 text-muted">Контакты</p>
+            </div>
+            <div class="col-xl-3 col-md-6 col-sm-12 mb-3">
+                <p class="fw-normal fs-6 mb-4">Помощь</p>
+                <p class="fw-light fs-6 mb-3 text-muted">Как оформить заказ</p>
+                <p class="fw-light fs-6 mb-3 text-muted">Условия оплаты</p>
+                <p class="fw-light fs-6 mb-3 text-muted">Гарантия на товар</p>
+                <p class="fw-light fs-6 mb-3 text-muted">Бонусная программа</p>
+                <p class="fw-light fs-6 mb-4 text-muted">Вопрос-ответ</p>
+                <p class="fw-normal fs-6 mb-3">Пользователю</p>
+                <p class="fw-light fs-6 mb-3 text-muted">Условия использования сервиса</p>
+                <p class="fw-light fs-6 mb-3 text-muted">Политика в отношении обработки персональных данных</p>
+            </div>
+            <div class="col-xl-3 col-md-6 col-sm-12 mb-3">
+                <p class="fw-normal fs-6 mb-4">Контакты</p>
+                <p class="fw-light fs-6 text-muted">Ваш город</p>
+                <p class="fw-light fs-6 mb-4">Москва, Московская область</p>
+                <p class="fw-light fs-6 text-muted">Телефон магазина</p>
+                <p class="fw-light fs-6 mb-4">+79999999999</p>
+                <p class="fw-light fs-6 text-muted">Адрес магазина</p>
+                <p class="fw-light fs-6 mb-4">Москва</p>
+                <p class="fw-light fs-6 text-muted">Работаем</p>
+                <p class="fw-light fs-6 mb-4">С 9:00 до 18:30</p>
+            </div>
+            <div class="col-xl-3 col-md-6 col-sm-12 mb-3">
+                <p class="fw-normal fs-6 mb-4">Пользователю</p>
+                <p class="fw-light fs-6 mb-4">Данный магазин (продавец) работает по договору услуг с ООО Букетная Лавка.
+                    Публичная оферта о заключении договоров – размещена и доступна в сети Интернет по адресу
+                    buclav.ru/docs/oferta/ ООО Букетная Лавка обеспечивает техническую возможность размещения и /или распространения Продавцом информации о
+                    Товаре с использованием Сайта (пункт 2.2 оферты).</p>
+            </div>
+        </div>
+    </div>
+<script src="{% static '/js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

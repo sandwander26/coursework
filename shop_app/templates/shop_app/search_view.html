@@ -1,0 +1,28 @@
+{% extends "shop_app/base.html" %}
+
+{% block title %}
+    Ваша корзина
+{% endblock %}
+
+
+{% block body %}
+{% load static %}
+    <div class="container">
+        <p class="fw-light fs-2">Результат поиска по запросу: <b>{{ search }}</b></p>
+        <div class="row">
+            {% for flower in flowers_list %}
+            <div class="col-xl-3 col-md-6 col-sm-12 mb-3">
+                <a href="{% url 'shop_app:details' flower.pk %}">
+                    <img src="{{ flower.image.url }}" alt="" class="img-fluid mx-auto rounded" style="height: 300px; object-fit: cover;">
+                </a>
+                <div class="d-flex justify-content-between align-items-center mt-2">
+                    <p class="fw-medium fs-5">{{ flower.price|floatformat:0 }} ₽</p>
+                    <p class="fw-light fs-5"><a class="nav-link active" href="{% url 'shop_app:details' flower.pk %}" target="_blank">{{ flower.name|truncatechars:18 }}</a></p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+{% endblock %}
