@@ -1,0 +1,21 @@
+.mode-toggle-btn {
+      margin-right: 10px;
+}
+
+.nav {
+  margin-bottom: 10px; /* Устанавливаем отступ снизу */
+}
+
+.contact-block {
+  display: inline-block; /* Размещаем блоки горизонтально */
+  margin-right: 10px; /* Устанавливаем отступ между блоками */
+}
+
+.time {
+  font-weight: lighter; /* Устанавливаем тонкий стиль шрифта */
+}
+
+.custom-image {
+    width: 25%;
+    height: 25%;
+}
